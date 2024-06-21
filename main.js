@@ -36,7 +36,7 @@ const main = async () => {
   const users = await fetchUsers();
 
   const renderingUsers = () => {
-    const usersPage = users
+    const filterUsers = users
       .filter((user) => {
         if (user.id !== stringId) {
           return true;
@@ -51,10 +51,11 @@ const main = async () => {
           return true;
         }
         return false;
-      })
-      .slice(itemIndex, itemIndex + 5);
+      });
+    console.log('filterUsers', filterUsers);
+    filterUsers.length >= 5 ? (footer.style.display = 'flex') : (footer.style.display = 'none');
+    const usersPage = filterUsers.slice(itemIndex, itemIndex + 5);
     console.log('usersPage', usersPage);
-    //usersPage.length >= 5 ? (footer.style.display = 'flex') : (footer.style.display = 'none');
 
     resultTable.innerHTML = tableHeader;
     usersPage.forEach((item) => {
@@ -67,13 +68,11 @@ const main = async () => {
             new Date(item.registration_date).getDate() < 10
               ? `0${new Date(item.registration_date).getDate()}`
               : new Date(item.registration_date).getDate()
-          }
-          .${
-            new Date(item.registration_date).getMonth() + 1 < 10
-              ? `0${new Date(item.registration_date).getMonth() + 1}`
-              : new Date(item.registration_date).getMonth() + 1
-          }
-          .${new Date(item.registration_date).getFullYear()}
+          }.${
+        new Date(item.registration_date).getMonth() + 1 < 10
+          ? `0${new Date(item.registration_date).getMonth() + 1}`
+          : new Date(item.registration_date).getMonth() + 1
+      }.${new Date(item.registration_date).getFullYear()}
         </div>
         <div class="table_data">${item.rating}</div>
         <img

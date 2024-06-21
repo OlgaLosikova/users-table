@@ -83,13 +83,8 @@ button:disabled {
 }
 
 .main-container {
-  background-color: white;
-  border-radius: 7px;
   display: flex;
   flex-direction: column;
-  margin: 72px 12px 30px 27px;
-  padding: 12px 44px 16px 16px;
-  box-shadow: 0px 18px 15px 0px #94949426;
 }
 .filters {
   margin-left: 8px;
@@ -98,7 +93,7 @@ button:disabled {
 }
 .filters-wrapper {
   font-size: 10px;
-  margin-bottom: 15px;
+  margin: 72px 0 0 27px;
 }
 .filters_title {
   color: #9eaab4;
@@ -113,6 +108,14 @@ button:disabled {
   display: table;
   border-collapse: collapse;
   width: 100%;
+}
+.table-container {
+  padding: 16px 18px 16px 16px;
+  display: flex;
+  box-shadow: 0px 18px 15px 0px #94949426;
+  margin: 16px 18px 16px 27px;
+  background-color: white;
+  border-radius: 7px;
 }
 .table_row {
   display: table-row;
@@ -170,7 +173,7 @@ button:disabled {
   margin: auto;
   width: 353px;
   height: 134px;
-  padding: 36px 36px 32px 36px;
+  padding: 32px 36px 32px 36px;
   border-radius: 8px;
   background-color: white;
   display: flex;
@@ -203,4 +206,30 @@ button:disabled {
   background-color: #0cb4f1;
   color: white;
   margin-left: 36px;
+}
+@media (max-width: 500px) {
+  .table_data {
+    padding: 10px 2px;
+  }
+  .table_title {
+    display: none;
+  }
+  .table_delete-button {
+    background-color: white;
+    box-shadow: 0px 18px 15px 0px white;
+    right: 0;
+  }
+  .main-container {
+    padding: 12px 4px 16px 4px;
+  }
+  .table-container {
+    margin: 4px;
+    padding: 10px 4px;
+  }
+  .header-container {
+    margin: 0 4px 0 4px;
+  }
+  .filters-wrapper {
+    margin: 72px 0 0 4px;
+  }
 }
