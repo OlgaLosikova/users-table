@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="assets/styles/normalize.css" />
+    <link rel="stylesheet" href="assets/styles/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users List</title>
+  </head>
+  <body>
+    <header>
+      <h1>Список пользователей</h1>
+      <div class="header-container">
+        <div class="search-wrapper">
+          <img class="search_icon" src="./assets/svg/search.svg" alt="search" /><input
+            placeholder="Поиск по имени или e-mail"
+            class="search"
+            type="text"
+          />
+        </div>
+        <div class="clean-button">
+          <img src="./assets/svg/clean.svg" alt="clean" /><span class="clean-button_link"
+            >Очистить фильтр</span
+          >
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="main-container">
+        <div class="filters-wrapper">
+          <span class="filters_title">Сортировка:</span
+          ><a class="filters filters__black" href="#">Дата регистрации</a
+          ><a class="filters filters__gray" href="#">Рейтинг</a>
+        </div>
+        <div class="table">
+          <div id="tableHeader" class="table_row">
+            <div class="table_title">Имя пользователя</div>
+            <div class="table_title">E-mail</div>
+            <div class="table_title">Дата регистрации</div>
+            <div class="table_title">Рейтинг</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal-background">
+      <div class="modal">
+        <p>Вы уверены, что хотите удалить пользователя?</p>
+        <div class="button-wrapper">
+          <button id="yesButton" class="modal-button">Да</button
+          ><button id="noButton" class="modal-button modal-button__blue">Нет</button>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <button disabled id="prev">Назад</button><span class="page-number">1</span
+      ><button id="next">Вперед</button>
+    </footer>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
