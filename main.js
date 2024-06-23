@@ -16,8 +16,8 @@ const tableHeader = document.getElementById('tableHeader').innerHTML;
 //Поле поиска, кнопка очистки фильтрации, пустой массив поиска
 const searchInput = document.querySelector('.search');
 const cleanButton = document.querySelector('.clean-button');
-let resultUsers = [];
-let isEmptySearch = false;
+let filterUsers = [];
+let isFiltred = false;
 
 //Кнопки Да и Нет в модальном окне, индекс удаляемого элемента
 const yesButton = document.getElementById('yesButton');
@@ -26,8 +26,8 @@ let stringId;
 let decrementUsers = [];
 
 //Кнопки сортировки, переменная направления сортировки
-const sortDateButton = document.querySelector('.filters__black');
-const sortRatingButton = document.querySelector('.filters__gray');
+const sortDateButton = document.querySelector('.filters_black');
+const sortRatingButton = document.querySelector('.filters_gray');
 let dateDirection = 0;
 let ratingDirection = 0;
 
@@ -47,53 +47,50 @@ const main = async () => {
   const users = await fetchUsers();
 
   const renderingUsers = () => {
-    //При первой отрисовке записываем всех пришедших из api пользователей в массив, если есть запрос в поиске и/или удаленная строка, перезаписываем массив
-    console.log('------------------------');
-
-    decrementUsers = (decrementUsers.length === 0 ? users : resultUsers).filter(
+    decrementUsers = (decrementUsers.length === 0 ? users : decrementUsers).filter(
       (user) => user.id !== stringId,
     );
-    console.log('decrementUsers.length', decrementUsers.length);
-    resultUsers = (
-      resultUsers.length === 0
-        ? users
-        : decrementUsers.length < 25 && decrementUsers.length > 0
-        ? decrementUsers
-        : resultUsers
-    ).filter(
+
+    filterUsers = decrementUsers.filter(
       (user) =>
         user.username.toLowerCase().includes(searchInput.value.toLowerCase()) ||
         user.email.toLowerCase().includes(searchInput.value.toLowerCase()),
     );
-
     //Сортировка по дате или рейтингу
     if (dateDirection === 'DESC') {
-      resultUsers.sort((a, b) => (a.registration_date < b.registration_date ? 1 : -1));
+      decrementUsers.sort((a, b) => (a.registration_date < b.registration_date ? 1 : -1));
     } else if (dateDirection === 'ASC') {
-      resultUsers.sort((a, b) => (a.registration_date > b.registration_date ? 1 : -1));
+      decrementUsers.sort((a, b) => (a.registration_date > b.registration_date ? 1 : -1));
     } else if (ratingDirection === 'DESC') {
-      resultUsers.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+      decrementUsers.sort((a, b) => (a.rating < b.rating ? 1 : -1));
     } else if (ratingDirection === 'ASC') {
-      resultUsers.sort((a, b) => (a.rating > b.rating ? 1 : -1));
-    } else resultUsers.sort((a, b) => a.id - b.id);
-    console.log('сортировка и поиск в resultUsers', resultUsers);
-    resultUsers.length >= 5 ? (footer.style.display = 'flex') : (footer.style.display = 'none');
+      decrementUsers.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+    } else decrementUsers.sort((a, b) => a.id - b.id);
+
+    filterUsers.length > 5 && decrementUsers.length > 5
+      ? (footer.style.display = 'flex')
+      : (footer.style.display = 'none');
 
     //Исходя из полученного на предыдущем шаге массива,записываем в массив отображаем первую страницу записей
-    const usersPage = resultUsers.slice(
-      itemIndex,
-      resultUsers[itemIndex + 5] ? itemIndex + 5 : resultUsers.length,
-    );
-    console.log('страница результатов c возможным удалением, поиском, фильтрацией', usersPage);
+    const usersPage = isFiltred
+      ? filterUsers.slice(
+          itemIndex,
+          filterUsers[itemIndex + 5] ? itemIndex + 5 : filterUsers.length,
+        )
+      : decrementUsers.slice(
+          itemIndex,
+          decrementUsers[itemIndex + 5] ? itemIndex + 5 : decrementUsers.length,
+        );
+
     resultTable.innerHTML = tableHeader;
     usersPage.length === 0
       ? (resultTable.innerHTML = `<span class="table_empty">Нет ни одной записи</span>`)
       : usersPage.forEach((item) => {
           const tableRow = document.createElement('div');
-          tableRow.classList.add('table_row');
-          tableRow.innerHTML = `<div class="table_data table_data__blue">${item.username}</div>
-        <div class="table_data">${item.email}</div>
-        <div class="table_data">
+          tableRow.classList.add('table__row');
+          tableRow.innerHTML = `<div class="table__data table__data_blue">${item.username}</div>
+        <div class="table__data">${item.email}</div>
+        <div class="table__data">
           ${
             new Date(item.registration_date).getDate() < 10
               ? `0${new Date(item.registration_date).getDate()}`
@@ -104,10 +101,10 @@ const main = async () => {
               : new Date(item.registration_date).getMonth() + 1
           }.${new Date(item.registration_date).getFullYear()}
         </div>
-        <div class="table_data">${item.rating}</div>
+        <div class="table__data">${item.rating}</div>
         <img
           id="${item.id}"
-          class="table_delete-button"
+          class="table__delete-button"
           src="./assets/svg/cancel.svg"
           alt="delete"
         />`;
@@ -122,7 +119,7 @@ const main = async () => {
     pageIndex++;
     pageNumber.innerText = pageIndex;
     prevButton.disabled = false;
-    if (itemIndex >= resultUsers.length - 5) {
+    if (isFiltred ? itemIndex >= filterUsers.length - 5 : itemIndex >= decrementUsers.length - 5) {
       nextButton.disabled = true;
     }
     renderingUsers();
@@ -135,7 +132,7 @@ const main = async () => {
     if (itemIndex === 0) {
       prevButton.disabled = true;
     }
-    if (itemIndex >= resultUsers.length - 5) {
+    if (isFiltred ? itemIndex >= filterUsers.length - 5 : itemIndex >= decrementUsers.length - 5) {
       nextButton.disabled = true;
     }
     renderingUsers();
@@ -160,9 +157,9 @@ const main = async () => {
   //Сброс поиска и сортировки
   const searchClean = () => {
     searchInput.value = '';
-    resultUsers = decrementUsers;
     dateDirection = 0;
     ratingDirection = 0;
+    isFiltred = false;
     goToFirstPage();
     renderingUsers();
     cleanButton.style.display = 'none';
@@ -179,6 +176,7 @@ const main = async () => {
   // Поиск
   const searchUsers = () => {
     if (searchInput.value !== '' && searchInput.value.length > 2) {
+      isFiltred = true;
       goToFirstPage();
       renderingUsers();
       cleanButton.style.display = 'flex';

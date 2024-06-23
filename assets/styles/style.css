@@ -65,7 +65,7 @@ button:disabled {
 .search-wrapper {
   position: relative;
 }
-.search_icon {
+.search-icon {
   position: absolute;
   top: 5px;
   left: 3px;
@@ -74,7 +74,7 @@ button:disabled {
   display: none;
   cursor: pointer;
 }
-.clean-button_link {
+.clean-button__link {
   padding-left: 4px;
   font-size: 12px;
 }
@@ -95,13 +95,13 @@ button:disabled {
   font-size: 10px;
   margin: 72px 0 0 27px;
 }
-.filters_title {
+.filters-title {
   color: #9eaab4;
 }
-.filters__black {
+.filters_black {
   color: #333;
 }
-.filters__gray {
+.filters_gray {
   color: #9eaab4;
 }
 .table {
@@ -110,38 +110,38 @@ button:disabled {
   width: 100%;
 }
 .table-container {
-  padding: 16px 18px 16px 16px;
+  padding: 12px 18px 16px 16px;
   display: flex;
   box-shadow: 0px 18px 15px 0px #94949426;
   margin: 16px 18px 16px 27px;
   background-color: white;
   border-radius: 7px;
 }
-.table_row {
+.table__row {
   display: table-row;
   position: relative;
   height: 50px;
   width: 100%;
 }
-.table_title {
+.table__title {
   display: table-cell;
   padding: 10px;
   font-size: 10px;
   color: #acacac;
 }
-.table_data {
+.table__data {
   display: table-cell;
   padding: 10px;
   font-size: 12px;
   color: #acacac;
   border-top: 1px solid #f7f7f7;
 }
-.table_data__blue {
+.table__data_blue {
   font-weight: 700;
   color: #0cb4f1;
 }
 
-.table_delete-button {
+.table__delete-button {
   position: absolute;
   right: 16px;
   top: 14px;
@@ -202,19 +202,19 @@ button:disabled {
   height: 27px;
   vertical-align: middle;
 }
-.modal-button__blue {
+.modal-button_blue {
   background-color: #0cb4f1;
   color: white;
   margin-left: 36px;
 }
 @media (max-width: 500px) {
-  .table_data {
+  .table__data {
     padding: 10px 2px;
   }
   .table_title {
     display: none;
   }
-  .table_delete-button {
+  .table__delete-button {
     background-color: white;
     box-shadow: 0px 18px 15px 0px white;
     right: 0;
