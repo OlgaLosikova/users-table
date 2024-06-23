@@ -211,7 +211,7 @@ button:disabled {
   .table__data {
     padding: 10px 2px;
   }
-  .table_title {
+  .table__title {
     display: none;
   }
   .table__delete-button {
